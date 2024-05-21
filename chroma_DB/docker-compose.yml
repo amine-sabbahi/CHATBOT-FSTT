@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  # chroma_db:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "5432:5432"
+  #   networks:
+  #     - chromadb_network
+  #   depends_on:
+  #     - pull_model
+
+  
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    container_name: ollama
+    networks:
+      - chromadb_network
+    
+  pull_model:
+    image: python:3.8-slim
+    container_name: pull_model_ollama
+    depends_on:
+      - ollama
+    networks:
+      - chromadb_network
+    command: >
+      bash -c 'apt-get update && apt-get install -y curl && curl -X POST -H "Content-Type: application/json" -d '{"name":"nomic-embed-text"}' http://ollama:11434/api/pull'
+
+
+networks:
+  chromadb_network:
+    driver: bridge
