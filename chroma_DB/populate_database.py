@@ -4,15 +4,16 @@ import shutil
 from langchain.document_loaders.pdf import PyPDFDirectoryLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain.schema.document import Document
-from get_embedding_function import get_embedding_function
 from langchain_community.document_loaders import WebBaseLoader
 from langchain_community.vectorstores import Chroma
-from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain.embeddings.huggingface import HuggingFaceEmbeddings
 from chromadb.utils import embedding_functions
 
 
 CHROMA_PATH = "./chroma"
 DATA_PATH = "./FSTT_DATA"
+
+local_model_path = "./local_models/sentence-transformers/all-mpnet-base-v2"
 
 
 def main():
@@ -48,7 +49,7 @@ def split_documents(documents: list[Document]):
 def add_to_chroma(chunks: list[Document]):
     # Load the existing database.
     db = Chroma(
-        persist_directory=CHROMA_PATH, embedding_function=HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+        persist_directory=CHROMA_PATH, embedding_function=HuggingFaceEmbeddings(model_name=sentence-transformers/all-mpnet-base-v2)
     )
     
     # # Calculate Page IDs.

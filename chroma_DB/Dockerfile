@@ -22,7 +22,7 @@ RUN pip install sentence-transformers
 RUN pip install flask
 
 # Copy the current directory contents into the container at /app
-COPY . /app
+COPY ./chroma_DB /app
 
 
 # Expose the port the app runs on
@@ -30,8 +30,8 @@ EXPOSE 5000
 
 # Define environment variable for running the application
 ENV PYTHONUNBUFFERED=1
-
-RUN python populate_database.py
+RUN python save_model_embbedding.py
+#RUN python populate_database.py
 
 # Command to run the application
 CMD ["python", "get_context.py"]

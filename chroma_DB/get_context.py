@@ -1,22 +1,43 @@
 from flask import Flask, request, jsonify
 from langchain_community.vectorstores import Chroma
 from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain.prompts import ChatPromptTemplate
+from langchain_community.llms.ollama import Ollama
 
 app = Flask(__name__)
 
 CHROMA_PATH = "./chroma"
+local_model_path = "./local_models/sentence-transformers/all-mpnet-base-v2"
+
+PROMPT_TEMPLATE = """
+Répondez à la question en vous basant uniquement sur le contexte suivant :
+
+{context}
+
+---
+
+Répondez à la question en fonction du contexte ci-dessus : {question}
+"""
+
 
 def query_rag(query_text: str):
     # Prepare the DB.
-    db = Chroma(persist_directory=CHROMA_PATH, embedding_function=HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2"))
+    db = Chroma(persist_directory=CHROMA_PATH, embedding_function=HuggingFaceEmbeddings(model_name=local_model_path))
 
     # Search the DB.
-    results = db.similarity_search_with_score(query_text, k=5)
+    results = db.similarity_search_with_score(query_text, k=2)
 
     context_text = "\n\n---\n\n".join([doc.page_content for doc, _score in results])
-    sources = [doc.metadata.get("id", None) for doc, _score in results]
+    prompt_template = ChatPromptTemplate.from_template(PROMPT_TEMPLATE)
+    prompt = prompt_template.format(context=context_text, question=query_text)
     
-    return context_text, sources
+    model = Ollama(model="gemma:2b-instruct", base_url="http://ollama:11434")
+    response_text = model.invoke(prompt)
+
+    sources = [doc.metadata.get("id", None) for doc, _score in results]
+    formatted_response = f"Response: {response_text}\nSources: {sources}"
+    #print(formatted_response)
+    return response_text
 
 @app.route('/query', methods=['POST'])
 def query():
@@ -26,8 +47,8 @@ def query():
     if not query_text:
         return jsonify({"error": "Query text is required"}), 400
     
-    context_text, sources = query_rag(query_text)
-    
+    context_text = query_rag(query_text)
+    print(context_text)
     return jsonify({
         "context": context_text,
     })
