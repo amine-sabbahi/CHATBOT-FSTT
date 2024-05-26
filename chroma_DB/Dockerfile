@@ -19,7 +19,7 @@ WORKDIR /app
 # Install any needed packages specified in requirements.txt
 RUN pip install pypdf langchain chromadb pytest unstructured  langchain-community langchain-chroma
 RUN pip install sentence-transformers
-RUN pip install flask
+RUN pip install flask flask_cors
 
 # Copy the current directory contents into the container at /app
 COPY ./chroma_DB /app

@@ -3,9 +3,10 @@ from langchain_community.vectorstores import Chroma
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain.prompts import ChatPromptTemplate
 from langchain_community.llms.ollama import Ollama
+from flask_cors import CORS
 
 app = Flask(__name__)
-
+CORS(app)
 CHROMA_PATH = "./chroma"
 local_model_path = "./local_models/sentence-transformers/all-mpnet-base-v2"
 

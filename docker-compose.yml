@@ -6,7 +6,6 @@ services:
       context: .
       dockerfile: chroma_DB/Dockerfile
     ports:
-      - "5432:5432"
       - "5000:5000"
     networks:
       - chromadb_network
@@ -21,7 +20,8 @@ services:
       - "11434:11434"
     networks:
       - chromadb_network
-  
+    volumes:
+      - ollama_model_data:/root/.ollama/models/
     
   pull_model:
     image: python:3.8-slim
@@ -30,8 +30,23 @@ services:
     networks:
       - chromadb_network
     command: >
-      bash -c "apt-get update && apt-get install -y curl && curl -X POST -H 'Content-Type: application/json' -d '{\"name\":\"gemma\"}' http://ollama:11434/api/pull"
+      bash -c "apt-get update && apt-get install -y curl && curl -X POST -H 'Content-Type: application/json' -d '{\"name\":\"gemma:2b-instruct\"}' http://ollama:11434/api/pull"
+
+  front_end:
+    build:
+      context: .
+      dockerfile: Front-end(NextJS)/Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - chroma_db
+    networks:
+      - chromadb_network
 
 networks:
   chromadb_network:
     driver: bridge
+
+volumes:
+  ollama_model_data:
+    driver : local

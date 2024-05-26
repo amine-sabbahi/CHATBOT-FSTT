@@ -1,6 +1,0 @@
-[submodule "Front-end (NextJS)"]
-	path = Front-end (NextJS)
-	url = https://github.com/BAKKALIAYOUB/Frontend-NextJS.git
-[submodule "LLM"]
-	path = LLM
-	url = https://github.com/BAKKALIAYOUB/LLM.git

@@ -1,7 +1,7 @@
 const AppLayout = ({ children ,title}) => {
     return (
-        <div className={"p-4 overflow-x-auto h-screen"}>
-            <div>{children}</div>
+        <div className={"flex p-4 overflow-x-auto h-screen bg-white"}>
+            {children}
         </div>
     )
 }

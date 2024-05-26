@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="3c195500-7ae9-4d55-b84f-6e0cf14bb451" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Form.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Layout/AppLayout.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lib/axios.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Front-end (NextJS)/.dockerignore" beforeDir="false" afterPath="$PROJECT_DIR$/.dockerignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Front-end (NextJS)/.env" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Front-end (NextJS)/.eslintrc.json" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintrc.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Front-end (NextJS)/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Front-end (NextJS)/.idea/chat-bot.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/chat-bot.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Front-end (NextJS)/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Front-end (NextJS)/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Front-end (NextJS)/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Front-end (NextJS)/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Front-end (NextJS)/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Front-end (NextJS)/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Front-end (NextJS)/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Front-end (NextJS)/.prettierrc.json" beforeDir="false" afterPath="$PROJECT_DIR$/.prettierrc.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Front-end (NextJS)/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Front-end (NextJS)/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Front-end (NextJS)/jsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/jsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Front-end (NextJS)/next.config.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Front-end (NextJS)/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Front-end (NextJS)/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Front-end (NextJS)/postcss.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/postcss.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Front-end (NextJS)/public/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/public/favicon.ico" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Front-end (NextJS)/public/next.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/next.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Front-end (NextJS)/public/vercel.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/vercel.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Front-end (NextJS)/src/components/AIOutput.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AIOutput.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Front-end (NextJS)/src/components/Button.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Button.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Front-end (NextJS)/src/components/DropDown.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/DropDown.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Front-end (NextJS)/src/components/DropDownLink.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/DropDownLink.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Front-end (NextJS)/src/components/Form.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Front-end (NextJS)/src/components/Input.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Input.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Front-end (NextJS)/src/components/InputError.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/InputError.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Front-end (NextJS)/src/components/InputValid.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/InputValid.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Front-end (NextJS)/src/components/Layout/AppLayout.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Front-end (NextJS)/src/components/NavBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/NavBar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Front-end (NextJS)/src/components/NavLink.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/NavLink.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Front-end (NextJS)/src/components/Navbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Navbar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Front-end (NextJS)/src/components/UserInput.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/UserInput.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Front-end (NextJS)/src/lib/axios.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Front-end (NextJS)/src/pages/_app.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/_app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Front-end (NextJS)/src/pages/_document.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/_document.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Front-end (NextJS)/src/pages/api/hello.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/api/hello.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Front-end (NextJS)/src/pages/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Front-end (NextJS)/src/styles/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/globals.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Front-end (NextJS)/tailwind.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/tailwind.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../chroma_DB/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../chroma_DB/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../chroma_DB/get_context.py" beforeDir="false" afterPath="$PROJECT_DIR$/../chroma_DB/get_context.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../docker-compose.yml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Dockerfile" />
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;BAKKALIAYOUB&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://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@github.com/BAKKALIAYOUB/CHATBOT-RAG&quot;,
+    &quot;accountId&quot;: &quot;7cc7e186-6c0d-4912-9787-9076838a25ad&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="2fIGhx5jpPdv1AwYvYNE7WRxeDH" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Docker.Dockerfile.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/ayoubbakkali/Desktop/CHAT-BOT-RAG/Front-end(NextJS)",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "ts.external.directory.path": "/opt/idea-IU-233.14475.28/plugins/javascript-impl/jsLanguageServicesImpl/external",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/components" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Dockerfile" type="docker-deploy" factoryName="dockerfile" temporary="true" server-name="Docker">
+      <deployment type="dockerfile">
+        <settings>
+          <option name="sourceFilePath" value="Dockerfile" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="dockerfile" temporary="true">
+      <deployment type="dockerfile">
+        <settings />
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Docker.Dockerfile" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9f38398b9061-18abd8497189-intellij.indexing.shared.core-IU-241.14494.240" />
+        <option value="bundled-js-predefined-1d06a55b98c1-74d2a5396914-JavaScript-IU-241.14494.240" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3c195500-7ae9-4d55-b84f-6e0cf14bb451" name="Changes" comment="" />
+      <created>1713481304335</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1713481304335</updated>
+      <workItem from="1713481305483" duration="1561000" />
+      <workItem from="1713570811178" duration="891000" />
+      <workItem from="1713776872969" duration="1712000" />
+      <workItem from="1713778864619" duration="4099000" />
+      <workItem from="1713784207220" duration="721000" />
+      <workItem from="1713785189918" duration="939000" />
+      <workItem from="1713786452241" duration="349000" />
+      <workItem from="1713786932364" duration="664000" />
+      <workItem from="1713787682020" duration="920000" />
+      <workItem from="1713864999541" duration="1226000" />
+      <workItem from="1714036925725" duration="12000" />
+      <workItem from="1714041971595" duration="11000" />
+      <workItem from="1714221663149" duration="29000" />
+      <workItem from="1716673401111" duration="183000" />
+      <workItem from="1716674571987" duration="1719000" />
+      <workItem from="1716718981116" duration="7195000" />
+      <workItem from="1716735943344" duration="7191000" />
+      <workItem from="1716752067913" duration="608000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

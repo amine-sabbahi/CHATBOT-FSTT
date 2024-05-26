@@ -26,9 +26,9 @@ const Input = ({ disabled = false, value, className, onChange, ...props }) => {
         <textarea
             disabled={disabled}
             value={value}
-            placeholder={"Write your Question"}
-            onChange={handleInputChange} // Use the custom handler for input change
-            className={`${className} shadow appearance-none rounded border-2 border-denim-400 w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring focus:ring-denim-500 focus:border-none resize-none`}
+            onChange={e => console.log(e.target.value)}
+            placeholder={"Write your Question"}// Use the custom handler for input change
+            className={`${className}  appearance-none rounded  w-full py-2 px-3 text-gray-700 leading-tight outline-none resize-none overflow-auto`}
             rows={rows_max} // Set the rows attribute dynamically
             {...props}
             required

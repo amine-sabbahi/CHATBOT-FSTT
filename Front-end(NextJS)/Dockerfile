@@ -2,11 +2,11 @@ FROM node:18-alpine
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY Front-end(NextJS)/package*.json ./
 
 RUN npm install
 
-COPY . .
+COPY Front-end(NextJS)/. .
 
 RUN npm run build
 
