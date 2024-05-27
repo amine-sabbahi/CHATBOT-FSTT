@@ -70,9 +70,9 @@ End of table.
                 <div className="p-4 overflow-x-auto">
                     {chatHistory.map((chat, index) => (
                         chat.type === "user" ? (
-                            <UserInput key={index}><Markdown remarkPlugins={[remarkGfm, remarkBreaks]} className="prose prose-lg max-w-none text-white">{chat.text}</Markdown></UserInput>
+                            <UserInput key={index}><Markdown remarkPlugins={[remarkGfm, remarkBreaks]} className="prose prose-lg max-w-none text-white prose-headings:text-white">{chat.text}</Markdown></UserInput>
                         ) : (
-                            <AIOutput key={index}><Markdown remarkPlugins={[remarkGfm, remarkBreaks]} className="prose prose-lg max-w-none text-white">{chat.text}</Markdown></AIOutput>
+                            <AIOutput key={index}><Markdown remarkPlugins={[remarkGfm, remarkBreaks]} className="prose prose-lg max-w-none text-white prose-headings:text-white prose-strong:text-white prose-table:table-fixed">{chat.text}</Markdown></AIOutput>
                         )
                     ))}
                     {loading &&

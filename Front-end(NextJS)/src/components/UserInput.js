@@ -9,7 +9,7 @@ const UserInput = ({ children }) => (
         </div>
 
         <div
-            className={' bg-denim-400 dark:bg-indigo-400 p-2 rounded-2xl text-white w-full whitespace-normal overflow-x-auto p-4 mb-4 mt-4'}>
+            className={' bg-denim-400 dark:bg-indigo-400 p-2 rounded-2xl text-white whitespace-normal overflow-x-auto p-4 mb-4 mt-4'}>
             <p className={'mb-2 bol font-bold'}>ME</p>
             {children}
         </div>
