@@ -12,7 +12,7 @@ local_model_path = "/root/all-mpnet-base-v2"
 
 # Define the prompt template
 PROMPT_TEMPLATE = """
-Répondez à la question en vous basant uniquement sur le contexte suivant :
+Répondez à la question en vous basant sur le contexte suivant:
 
 {context}
 
@@ -26,7 +26,9 @@ Si vous ne trouvez pas de réponse dans le contexte, répondez selon vos connais
 
 def query_rag(query_text: str):
     # Prepare the DB.
-    db = Chroma(persist_directory=CHROMA_PATH, embedding_function=HuggingFaceEmbeddings(model_name=local_model_path))
+    embedding_model = HuggingFaceEmbeddings(model_name=local_model_path)
+
+    db = Chroma(persist_directory=CHROMA_PATH, embedding_function=embedding_model)
 
     # Search the DB.
     results = db.similarity_search_with_score(query_text, k=5)
@@ -38,8 +40,8 @@ def query_rag(query_text: str):
     model = Ollama(model="gemma:2b-instruct", base_url="http://ollama:11434")
     response_text = model.invoke(prompt)
 
-    sources = [doc.metadata.get("id", None) for doc, _score in results]
-    formatted_response = f"Response: {response_text}\nSources: {sources}"
+    #sources = [doc.metadata.get("id", None) for doc, _score in results]
+    #formatted_response = f"Response: {response_text}\nSources: {sources}"
     #print(formatted_response)
     return response_text
 

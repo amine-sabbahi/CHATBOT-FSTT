@@ -32,7 +32,16 @@ services:
     command: >
       bash -c "apt-get update && apt-get install -y curl && curl -X POST -H 'Content-Type: application/json' -d '{\"name\":\"gemma:2b-instruct\"}' http://ollama:11434/api/pull"
 
-
+  front_end:
+    build:
+      context: .
+      dockerfile: Front-end(NextJS)/Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - chroma_db
+    networks:
+      - chromadb_network
 
 networks:
   chromadb_network:
