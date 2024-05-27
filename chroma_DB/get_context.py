@@ -8,16 +8,19 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 CHROMA_PATH = "./chroma"
-local_model_path = "./local_models/sentence-transformers/all-mpnet-base-v2"
+local_model_path = "/root/all-mpnet-base-v2"
 
+# Define the prompt template
 PROMPT_TEMPLATE = """
-Répondez à la question en vous basant uniquement sur le contexte suivant :
+Répondez à la question en vous basant uniquement sur le contexte suivant :
 
 {context}
 
 ---
 
-Répondez à la question en fonction du contexte ci-dessus : {question}
+Répondez à la question en fonction du contexte ci-dessus : {question}
+
+Si vous ne trouvez pas de réponse dans le contexte, répondez selon vos connaissances générales.
 """
 
 
@@ -26,7 +29,7 @@ def query_rag(query_text: str):
     db = Chroma(persist_directory=CHROMA_PATH, embedding_function=HuggingFaceEmbeddings(model_name=local_model_path))
 
     # Search the DB.
-    results = db.similarity_search_with_score(query_text, k=2)
+    results = db.similarity_search_with_score(query_text, k=5)
 
     context_text = "\n\n---\n\n".join([doc.page_content for doc, _score in results])
     prompt_template = ChatPromptTemplate.from_template(PROMPT_TEMPLATE)
@@ -51,7 +54,7 @@ def query():
     context_text = query_rag(query_text)
     print(context_text)
     return jsonify({
-        "context": context_text,
+        "ai": context_text,
     })
 
 if __name__ == '__main__':

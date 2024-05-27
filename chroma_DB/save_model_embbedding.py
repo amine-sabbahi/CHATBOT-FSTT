@@ -8,5 +8,5 @@ tokenizer = AutoTokenizer.from_pretrained(model_name)
 model = AutoModel.from_pretrained(model_name)
 
 # Save the model to a local directory
-model.save_pretrained("./local_models/sentence-transformers/all-mpnet-base-v2")
-tokenizer.save_pretrained("./local_models/sentence-transformers/all-mpnet-base-v2")
+model.save_pretrained("/root/all-mpnet-base-v2")
+tokenizer.save_pretrained("/root/all-mpnet-base-v2")

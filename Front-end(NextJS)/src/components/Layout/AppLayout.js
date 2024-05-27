@@ -1,6 +1,6 @@
-const AppLayout = ({ children ,title}) => {
+const AppLayout = ({ children }) => {
     return (
-        <div className={"flex p-4 overflow-x-auto h-screen bg-white"}>
+        <div className={"flex p-4 overflow-x-auto h-screen"}>
             {children}
         </div>
     )
