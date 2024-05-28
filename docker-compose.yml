@@ -52,15 +52,6 @@ services:
       - chromadb_network
 
 
-  redis:
-    image: redis:latest
-    ports:
-      - "6379:6379"
-    networks:
-      - chromadb_network
-    depends_on:
-      - chroma_db
-
 networks:
   chromadb_network:
     driver: bridge
