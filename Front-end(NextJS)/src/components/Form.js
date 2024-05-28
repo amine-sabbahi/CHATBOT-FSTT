@@ -7,11 +7,15 @@ import Markdown from 'react-markdown'
 import remarkGfm from 'remark-gfm';
 import remarkBreaks from 'remark-breaks';
 
+
+import Error from '@/components/Error'
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
+
 const Form = ({ children }) => {
     const [userInput, setUserInput] = useState("");
     const [chatHistory, setChatHistory] = useState([]);
     const [loading, setLoading] = useState(false); // Add loading state
-
+    const [error , setError] = useState(null);
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -22,19 +26,23 @@ const Form = ({ children }) => {
 
         setLoading(true); // Set loading state to true
 
-        const response = await axios.post('/query', {
+        await axios.post('/query', {
             query: userInput,
-        });
-
-        if (response) {
+        })
+        .then(res => {
             setChatHistory(prevChatHistory => [
                 ...prevChatHistory,
-                { type: "ai", text: response.data.ai }
+                { type: "ai", text: res.data.ai }
             ]);
             setUserInput("");
-        }
+            setLoading(false);
+            setError(null)
+        })
+        .catch(error => {
+            setError(error.message)
+            setLoading(false)
+        });
 
-        setLoading(false);
     };
 
     const handleKeyDown = async (e) => {
@@ -51,43 +59,53 @@ const Form = ({ children }) => {
     const type = "bubbles"; // Define the type of loading animation
     const color = "#1a5fb4"; // Define the color of the loading animation
     const markdown = `
-# Markdown Table Test
+\`\`\`python
+# This Python code calculates the sum of two numbers.
 
-This is a table with some data:
+# Get the two numbers from the user.
+num1 = int(input("Enter the first number: "))
+num2 = int(input("Enter the second number: "))
 
-| Header 1 | Header 2 |
-| -------- | -------- |
-| Cell 1   |  Cell 2  |
-| Cell 3   | Cell 4   |
-| Cell 5   | Cell 6   |
+# Calculate the sum of the two numbers.
+sum = num1 + num2
 
-End of table.
-    `;
+# Print the sum of the two numbers.
+print("The sum of", num1, "and", num2, "is", sum)
+\`\`\`
+
+
+`;
+
     return (
         <form onSubmit={handleSubmit} className={"w-full"}>
             <div className="flex flex-col p-4 rounded-xl shadow-xl h-full w-full shadow-denim-300 bg-white dark:bg-gray-700 dark:shadow-gray-700">
-
                 <div className="p-4 overflow-x-auto">
-                    {chatHistory.map((chat, index) => (
-                        chat.type === "user" ? (
-                            <UserInput key={index}><Markdown remarkPlugins={[remarkGfm, remarkBreaks]} className="prose prose-lg max-w-none text-white prose-headings:text-white">{chat.text}</Markdown></UserInput>
-                        ) : (
-                            <AIOutput key={index}><Markdown remarkPlugins={[remarkGfm, remarkBreaks]} className="prose prose-lg max-w-none text-white prose-headings:text-white prose-strong:text-white prose-table:table-fixed">{chat.text}</Markdown></AIOutput>
-                        )
-                    ))}
+                    <TransitionGroup>
+                        {chatHistory.map((chat, index) => (
+                            <CSSTransition key={index} classNames="fade">
+                                {chat.type === "user" ? (
+                                    <UserInput key={index}>
+                                        <Markdown remarkPlugins={[remarkGfm, remarkBreaks]} className="prose prose-lg max-w-none text-white prose-headings:text-white prose-strong:text-white prose-table:table-fixed">{chat.text}</Markdown>
+                                    </UserInput>
+                                ) : (
+                                    <AIOutput key={index}>
+                                        <Markdown remarkPlugins={[remarkGfm, remarkBreaks]} className="prose prose-lg max-w-none text-white prose-headings:text-white prose-strong:text-white prose-table:table-fixed">{chat.text}</Markdown>
+                                    </AIOutput>
+                                )}
+                            </CSSTransition>
+                        ))}
+                    </TransitionGroup>
                     {loading &&
-                        <div className={"flex flex-row"}>
+                        <div className="flex flex-row">
                             <div>
-                                <img
-                                    className="w-8 h-8 my-6 mr-3 p-1 rounded-full ring-2 ring-denim-600 dark:ring-gray-600"
-                                    src="https://fstt.ac.ma/Portail2023/wp-content/uploads/2023/03/fst-1024x383.png"
-                                    alt="Rounded avatar"/>
+                                <img className="w-8 h-8 my-6 mr-3 p-1 rounded-full ring-2 ring-denim-600 dark:ring-gray-600" src="https://fstt.ac.ma/Portail2023/wp-content/uploads/2023/03/fst-1024x383.png" alt="Rounded avatar"/>
                             </div>
-                            <div className={'pt-2rounded-2xl text-white w-full whitespace-normal overflow-x-auto pb-2 mb-4 mt-4'}>
+                            <div className="pt-2 rounded-2xl text-white w-full whitespace-normal overflow-x-auto pb-2 mb-4 mt-4">
                                 <ReactLoading type={type} color={color} height={60} width={60} />
                             </div>
                         </div>
                     }
+                    {error && <Error>{error}</Error>}
                 </div>
                 <div
                     className="flex items-center p-4 mt-auto rounded-xl border border-gray-200 dark:border-gray-600 w-full">

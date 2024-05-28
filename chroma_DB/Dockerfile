@@ -20,6 +20,7 @@ WORKDIR /app
 RUN pip install pypdf langchain chromadb pytest unstructured  langchain-community langchain-chroma
 RUN pip install sentence-transformers
 RUN pip install flask flask_cors
+RUN pip install redis
 
 # Copy the current directory contents into the container at /app
 COPY ./chroma_DB /app

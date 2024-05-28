@@ -10,6 +10,11 @@ CORS(app)
 CHROMA_PATH = "./chroma"
 local_model_path = "/root/all-mpnet-base-v2"
 
+# Initialize the embedding model and Chroma DB once
+embedding_model = HuggingFaceEmbeddings(model_name=local_model_path)
+db = Chroma(persist_directory=CHROMA_PATH, embedding_function=embedding_model)
+model = Ollama(model="gemma:2b-instruct", base_url="http://ollama:11434")
+
 # Define the prompt template
 PROMPT_TEMPLATE = """
 Répondez à la question en vous basant sur le contexte suivant:
@@ -25,39 +30,40 @@ Si vous ne trouvez pas de réponse dans le contexte, répondez selon vos connais
 
 
 def query_rag(query_text: str):
-    # Prepare the DB.
-    embedding_model = HuggingFaceEmbeddings(model_name=local_model_path)
-
-    db = Chroma(persist_directory=CHROMA_PATH, embedding_function=embedding_model)
-
-    # Search the DB.
+    # Search the DB
     results = db.similarity_search_with_score(query_text, k=5)
-
     context_text = "\n\n---\n\n".join([doc.page_content for doc, _score in results])
+
+    # Format the prompt
     prompt_template = ChatPromptTemplate.from_template(PROMPT_TEMPLATE)
     prompt = prompt_template.format(context=context_text, question=query_text)
-    
-    model = Ollama(model="gemma:2b-instruct", base_url="http://ollama:11434")
+
+    # Print the prompt for debugging
+    print("Prompt to the model:")
+    print(prompt)
+
+    # Invoke the model with the formatted prompt
     response_text = model.invoke(prompt)
 
-    #sources = [doc.metadata.get("id", None) for doc, _score in results]
-    #formatted_response = f"Response: {response_text}\nSources: {sources}"
-    #print(formatted_response)
     return response_text
+
 
 @app.route('/query', methods=['POST'])
 def query():
     data = request.json
     query_text = data.get('query')
-    
+
     if not query_text:
         return jsonify({"error": "Query text is required"}), 400
-    
-    context_text = query_rag(query_text)
-    print(context_text)
+
+    response_text = query_rag(query_text)
+    print("Response from the model:")
+    print(response_text)
+
     return jsonify({
-        "ai": context_text,
+        "ai": response_text,
     })
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
