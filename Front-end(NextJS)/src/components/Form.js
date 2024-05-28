@@ -6,7 +6,8 @@ import ReactLoading from 'react-loading';
 import Markdown from 'react-markdown'
 import remarkGfm from 'remark-gfm';
 import remarkBreaks from 'remark-breaks';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faRobot } from '@fortawesome/free-solid-svg-icons';
 
 import Error from '@/components/Error'
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
@@ -98,7 +99,7 @@ print("The sum of", num1, "and", num2, "is", sum)
                     {loading &&
                         <div className="flex flex-row">
                             <div>
-                                <img className="w-8 h-8 my-6 mr-3 p-1 rounded-full ring-2 ring-denim-600 dark:ring-gray-600" src="https://fstt.ac.ma/Portail2023/wp-content/uploads/2023/03/fst-1024x383.png" alt="Rounded avatar"/>
+                                <FontAwesomeIcon icon={faRobot} style={{ fontSize: '1.2rem', color: '#1a5fb4' }} />
                             </div>
                             <div className="pt-2 rounded-2xl text-white w-full whitespace-normal overflow-x-auto pb-2 mb-4 mt-4">
                                 <ReactLoading type={type} color={color} height={60} width={60} />
