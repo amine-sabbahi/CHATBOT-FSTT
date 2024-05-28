@@ -6,11 +6,13 @@ import ReactLoading from 'react-loading';
 import Markdown from 'react-markdown'
 import remarkGfm from 'remark-gfm';
 import remarkBreaks from 'remark-breaks';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faRobot } from '@fortawesome/free-solid-svg-icons';
 
 const Form = ({ children }) => {
     const [userInput, setUserInput] = useState("");
     const [chatHistory, setChatHistory] = useState([]);
-    const [loading, setLoading] = useState(false); // Add loading state
+    const [loading, setLoading] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -20,7 +22,7 @@ const Form = ({ children }) => {
             { type: "user", text: userInput },
         ]);
 
-        setLoading(true); // Set loading state to true
+        setLoading(true);
 
         const response = await axios.post('/query', {
             query: userInput,
@@ -38,7 +40,6 @@ const Form = ({ children }) => {
     };
 
     const handleKeyDown = async (e) => {
-        // Check if Shift + Enter are pressed
         if (e.key === 'Enter' && !e.shiftKey) {
             handleSubmit(e);
         }
@@ -48,8 +49,8 @@ const Form = ({ children }) => {
         console.log(chatHistory);
     }, [chatHistory]);
 
-    const type = "bubbles"; // Define the type of loading animation
-    const color = "#1a5fb4"; // Define the color of the loading animation
+    const type = "bubbles";
+    const color = "#1a5fb4";
     const markdown = `
 # Markdown Table Test
 
@@ -76,24 +77,20 @@ End of table.
                         )
                     ))}
                     {loading &&
-                        <div className={"flex flex-row"}>
-                            <div>
-                                <img
-                                    className="w-8 h-8 my-6 mr-3 p-1 rounded-full ring-2 ring-denim-600 dark:ring-gray-600"
-                                    src="https://fstt.ac.ma/Portail2023/wp-content/uploads/2023/03/fst-1024x383.png"
-                                    alt="Rounded avatar"/>
+                        <div className={"flex flex-row items-center"}>
+                            <div className="flex justify-center items-center w-8 h-8 my-6 mr-3 p-1 rounded-full ring-2 ring-denim-600 dark:ring-gray-600">
+                                <FontAwesomeIcon icon={faRobot} style={{ fontSize: '1.2rem', color: '#1a5fb4' }} />
                             </div>
-                            <div className={'pt-2rounded-2xl text-white w-full whitespace-normal overflow-x-auto pb-2 mb-4 mt-4'}>
+                            <div className={'pt-2 rounded-2xl text-white w-full whitespace-normal overflow-x-auto pb-2 mb-4 mt-4'}>
                                 <ReactLoading type={type} color={color} height={60} width={60} />
                             </div>
                         </div>
                     }
                 </div>
-                <div
-                    className="flex items-center p-4 mt-auto rounded-xl border border-gray-200 dark:border-gray-600 w-full">
+                <div className="flex items-center p-4 mt-auto rounded-xl border border-gray-200 dark:border-gray-600 w-full">
                     <textarea
                         onChange={e => setUserInput(e.target.value)}
-                        value={userInput} // Bind input value to state
+                        value={userInput}
                         name={"userInput"}
                         onKeyDown={handleKeyDown}
                         placeholder={"Write your Question"}
