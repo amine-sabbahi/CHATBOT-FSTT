@@ -23,7 +23,7 @@ RUN pip install flask flask_cors
 RUN pip install redis
 
 # Copy the current directory contents into the container at /app
-COPY ./chroma_DB /app
+COPY ./Back-end(Flask) /app
 
 
 # Expose the port the app runs on
@@ -35,4 +35,4 @@ RUN python save_model_embbedding.py
 #RUN python populate_database.py
 
 # Command to run the application
-CMD ["python", "get_context.py"]
+CMD ["python", "app.py"]

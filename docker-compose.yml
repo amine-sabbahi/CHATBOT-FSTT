@@ -1,10 +1,10 @@
 version: '3.8'
 
 services:
-  chroma_db:
+  back-end:
     build:
       context: .
-      dockerfile: chroma_DB/Dockerfile
+      dockerfile: Back-end(Flask)/Dockerfile
     ports:
       - "5000:5000"
     networks:
@@ -40,16 +40,8 @@ services:
     command: >
       bash -c "apt-get update && apt-get install -y curl && curl -X POST -H 'Content-Type: application/json' -d '{\"name\":\"gemma:2b-instruct\"}' http://ollama:11434/api/pull"
 
-  front_end:
-    build:
-      context: .
-      dockerfile: Front-end(NextJS)/Dockerfile
-    ports:
-      - "3000:3000"
-    depends_on:
-      - chroma_db
-    networks:
-      - chromadb_network
+
+ 
 
 
   redis:
@@ -59,7 +51,7 @@ services:
     networks:
       - chromadb_network
     depends_on:
-      - chroma_db
+      - back-end
 
 networks:
   chromadb_network:
