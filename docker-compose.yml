@@ -1,10 +1,10 @@
 version: '3.8'
 
 services:
-  chroma_db:
+  back-end:
     build:
       context: .
-      dockerfile: chroma_DB/Dockerfile
+      dockerfile: Back-end(Flask)/Dockerfile
     ports:
       - "5000:5000"
     networks:
@@ -47,7 +47,7 @@ services:
     ports:
       - "3000:3000"
     depends_on:
-      - chroma_db
+      - back-end
     networks:
       - chromadb_network
 
