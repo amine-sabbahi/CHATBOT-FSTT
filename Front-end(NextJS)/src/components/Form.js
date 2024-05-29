@@ -8,15 +8,51 @@ import remarkGfm from 'remark-gfm';
 import remarkBreaks from 'remark-breaks';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRobot } from '@fortawesome/free-solid-svg-icons';
-
+import { v4 as uuidv4 } from 'uuid'; // Import UUID library
 import Error from '@/components/Error'
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
+import useConversationHistory from '@/hooks/conversations'
+import useMessages from '@/hooks/messages'
 
 const Form = ({ children }) => {
     const [userInput, setUserInput] = useState("");
     const [chatHistory, setChatHistory] = useState([]);
     const [loading, setLoading] = useState(false); // Add loading state
     const [error , setError] = useState(null);
+    const [sessionId, setSessionId] = useState(null);
+    const [conversationId, setConversationId] = useState(null);
+
+    // Fetch History data
+    const { messages, isLoading } = useMessages(sessionId, "ed5fd3f3-8319-4bdc-a49d-eeb1c3b872d1");
+    console.log(messages)
+    useEffect(() => {
+        if (typeof window !== 'undefined') { // Check if window is defined
+            // SessionId
+            const savedSessionId = localStorage.getItem('sessionId');
+            if (savedSessionId) {
+                setSessionId(savedSessionId);
+
+            } else {
+                const newSessionId = uuidv4();
+                localStorage.setItem('sessionId', newSessionId);
+                setSessionId(newSessionId);
+            }
+
+            // ConversationId
+            const savedConversationId = localStorage.getItem('conversationId');
+            if (savedConversationId){
+                setConversationId(savedConversationId);
+            }
+            else{
+                const newConversationId = uuidv4();
+                localStorage.setItem('conversationId', newConversationId);
+                setConversationId(newConversationId);
+            }
+        }
+
+    }, []);
+
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -28,7 +64,11 @@ const Form = ({ children }) => {
         setLoading(true); // Set loading state to true
 
         await axios.post('/query', {
+
             query: userInput,
+            sessionId: sessionId,
+            conversationId: conversationId
+
         })
         .then(res => {
             setChatHistory(prevChatHistory => [
@@ -53,34 +93,40 @@ const Form = ({ children }) => {
         }
     };
 
-    useEffect(() => {
-        console.log(chatHistory);
-    }, [chatHistory]);
 
     const type = "bubbles"; // Define the type of loading animation
     const color = "#1a5fb4"; // Define the color of the loading animation
-    const markdown = `
-\`\`\`python
-# This Python code calculates the sum of two numbers.
 
-# Get the two numbers from the user.
-num1 = int(input("Enter the first number: "))
-num2 = int(input("Enter the second number: "))
-
-# Calculate the sum of the two numbers.
-sum = num1 + num2
-
-# Print the sum of the two numbers.
-print("The sum of", num1, "and", num2, "is", sum)
-\`\`\`
-
-
-`;
+    //console.log(history)
 
     return (
         <form onSubmit={handleSubmit} className={"w-full"}>
             <div className="flex flex-col p-4 rounded-xl shadow-xl h-full w-full shadow-denim-300 bg-white dark:bg-gray-700 dark:shadow-gray-700">
                 <div className="p-4 overflow-x-auto">
+
+                    {
+                        isLoading ? (
+                            <ReactLoading type={type} color={color} height={60} width={60} />
+                        ) : (
+                            messages && messages.map((h, index) => (
+                                h.role === "user" ? (
+
+                                    <UserInput key={index}>
+                                        <Markdown remarkPlugins={[remarkGfm, remarkBreaks]} className="prose prose-lg max-w-none text-white prose-headings:text-white prose-strong:text-white prose-table:table-fixed">
+                                            {h.content}
+                                        </Markdown>
+                                    </UserInput>
+                                ) : (
+                                    <AIOutput key={index}>
+                                        <Markdown remarkPlugins={[remarkGfm, remarkBreaks]} className="prose prose-lg max-w-none text-white prose-headings:text-white prose-strong:text-white prose-table:table-fixed">
+                                            {h.content}
+                                        </Markdown>
+                                    </AIOutput>
+                                )
+                            ))
+                        )
+                    }
+
                     <TransitionGroup>
                         {chatHistory.map((chat, index) => (
                             <CSSTransition key={index} classNames="fade">
