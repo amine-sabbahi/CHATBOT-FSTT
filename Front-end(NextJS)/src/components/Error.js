@@ -9,7 +9,7 @@ const Error = ({ children, ...props }) => {
                 <FontAwesomeIcon icon={faRobot} style={{ fontSize: '1.2rem', color: '#1a5fb4' }} />
             </div>
             <div
-                className={' bg-red-600 p-4 rounded-2xl text-white w-full border border-gray-600 border-2 border-spacing-24 mb-4 mt-4'}>
+                className={' bg-red-600 p-4 rounded-2xl text-white w-full border border-gray-600 border-2 border-spacing-24 mb-4 mt-4 font-bold'}>
                 {children}
             </div>
         </div>

@@ -22,14 +22,6 @@ services:
       - chromadb_network
     volumes:
       - ollama_model_data:/root/.ollama/models/
-    deploy:
-      resources:
-        limits:
-          cpus: '4.0'       # Limit the service to 4 CPUs
-          memory: 8g        # Limit the service to 8 GB of memory
-        reservations:
-          cpus: '2.0'       # Reserve at least 2 CPUs
-          memory: 4g        # Reserve at least 4 GB of memory
     
   pull_model:
     image: python:3.8-slim

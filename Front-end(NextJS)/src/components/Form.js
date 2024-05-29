@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from '@/lib/axios';
 import AIOutput from "@/components/AIOutput";
 import UserInput from "@/components/UserInput";
@@ -21,10 +21,16 @@ const Form = ({ children }) => {
     const [error , setError] = useState(null);
     const [sessionId, setSessionId] = useState(null);
     const [conversationId, setConversationId] = useState(null);
+    const chatEndRef = useRef(null); // Create a ref for the end of the chat
 
     // Fetch History data
     const { messages, isLoading } = useMessages(sessionId, "ed5fd3f3-8319-4bdc-a49d-eeb1c3b872d1");
-    console.log(messages)
+
+
+    useEffect(() => {
+        chatEndRef.current.scrollIntoView({ behavior: "smooth" }); // Scroll to the bottom on mount and update
+    }, [chatHistory, messages]);
+
     useEffect(() => {
         if (typeof window !== 'undefined') { // Check if window is defined
             // SessionId
@@ -51,7 +57,6 @@ const Form = ({ children }) => {
         }
 
     }, []);
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -102,14 +107,27 @@ const Form = ({ children }) => {
     return (
         <form onSubmit={handleSubmit} className={"w-full"}>
             <div className="flex flex-col p-4 rounded-xl shadow-xl h-full w-full shadow-denim-300 bg-white dark:bg-gray-700 dark:shadow-gray-700">
-                <div className="p-4 overflow-x-auto">
-
+                <div className={(messages.length === 0 && chatHistory.length === 0) ? "p-4 overflow-x-auto h-full flex items-center justify-center" : "p-4 overflow-x-auto"}>
+                    {
+                        messages.length === 0 && chatHistory.length === 0 &&
+                        <div className={'inset-0 flex items-center justify-center'}>
+                            <div className={'flex flex-col items-center'}>
+                                <div className={'rounded-full ring-2 ring-denim-600 flex items-center'}>
+                                    <FontAwesomeIcon className={'p-2'} icon={faRobot}
+                                                     style={{ fontSize: '2.2rem', color: '#1a5fb4' }} />
+                                </div>
+                                <div className={'mt-2 text-2xl font-bold'}>
+                                    How can I help you today?
+                                </div>
+                            </div>
+                        </div>
+                    }
                     {
                         isLoading ? (
                             <ReactLoading type={type} color={color} height={60} width={60} />
                         ) : (
                             messages && messages.map((h, index) => (
-                                h.role === "user" ? (
+                                h.role === 'user' ? (
 
                                     <UserInput key={index}>
                                         <Markdown remarkPlugins={[remarkGfm, remarkBreaks]} className="prose prose-lg max-w-none text-white prose-headings:text-white prose-strong:text-white prose-table:table-fixed">
@@ -153,12 +171,13 @@ const Form = ({ children }) => {
                         </div>
                     }
                     {error && <Error>{error}</Error>}
+                    <div ref={chatEndRef} /> {/* This div is used to scroll to the bottom */}
                 </div>
                 <div
                     className="flex items-center p-4 mt-auto rounded-xl border border-gray-200 dark:border-gray-600 w-full">
                     <textarea
                         onChange={e => setUserInput(e.target.value)}
-                        value={userInput} // Bind input value to state
+                        value={userInput}
                         name={"userInput"}
                         onKeyDown={handleKeyDown}
                         placeholder={"Write your Question"}
@@ -175,3 +194,4 @@ const Form = ({ children }) => {
 };
 
 export default Form;
+
