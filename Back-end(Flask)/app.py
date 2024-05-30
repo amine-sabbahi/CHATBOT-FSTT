@@ -105,6 +105,14 @@ def get_conversation_ids(session_id):
         "conversation_ids": conversation_ids
     })
 
+@app.route('/api/deleteConversation/<string:session_id>/<string:conversation_id>', methods=['DELETE'])
+def delete_conversation(session_id, conversation_id):
+    # Delete all keys related to the conversation
+    keys_to_delete = redis_client.keys(f"session:{session_id}:conversation:{conversation_id}:*")
+    if keys_to_delete:
+        redis_client.delete(*keys_to_delete)
+    return jsonify({"message": "Conversation deleted successfully"})
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

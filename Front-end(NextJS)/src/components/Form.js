@@ -13,6 +13,7 @@ import Error from '@/components/Error'
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import useConversationHistory from '@/hooks/conversations'
 import useMessages from '@/hooks/messages'
+import { mutate } from 'swr'
 
 const Form = ({ children }) => {
     const [userInput, setUserInput] = useState("");
@@ -83,6 +84,7 @@ const Form = ({ children }) => {
             setUserInput("");
             setLoading(false);
             setError(null)
+            mutate(`/api/conversations/${sessionId}`)
         })
         .catch(error => {
             setError(error.message)

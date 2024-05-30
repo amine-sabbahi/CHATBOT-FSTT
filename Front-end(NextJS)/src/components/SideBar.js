@@ -3,6 +3,9 @@ import { v4 as uuidv4 } from 'uuid';
 import useConversations from '@/hooks/conversations';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons'
+import axios from '@/lib/axios'
+import { mutate } from 'swr'
+import error from '@/components/Error'
 
 const SideBar = () => {
 
@@ -35,6 +38,20 @@ const SideBar = () => {
         }
     }, []);
 
+    const handleDelete = (conversationId) => {
+        console.log(conversationId);
+
+        axios.delete(`/api/deleteConversation/${sessionId}/${conversationId}`).then(() => {
+            mutate(`/api/conversations/${sessionId}`)
+
+        }).catch(error => {
+            throw error;
+        })
+
+    }
+
+
+
     //console.log(conversations.conversation_ids.map((ids) => {console.log(ids)}));
 
     return (
@@ -54,7 +71,7 @@ const SideBar = () => {
                                 {convId}
 
                                 <div className="grid mr-4 place-items-center">
-                                    <button className={"absolute"}>
+                                    <button className={"absolute"} onClick={() => handleDelete(convId)}>
                                         <FontAwesomeIcon icon={faTrash} style={{ fontSize: '1.2rem', color: '#1a5fb4' }} />
                                     </button>
                                 </div>
