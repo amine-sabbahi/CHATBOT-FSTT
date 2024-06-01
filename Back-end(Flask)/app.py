@@ -1,3 +1,5 @@
+from uuid import uuid4
+
 import redis
 import json
 from flask import Flask, request, jsonify
@@ -33,6 +35,7 @@ Répondez à la question en fonction du contexte ci-dessus : {question}
 Si vous ne trouvez pas de réponse dans le contexte, répondez selon vos connaissances générales.
 """
 
+
 def query_rag(query_text: str):
     # Search the DB
     results = db.similarity_search_with_score(query_text, k=15)
@@ -51,14 +54,15 @@ def query_rag(query_text: str):
 
     return response_text
 
+
 @app.route('/query', methods=['POST'])
 def query():
     data = request.json
     query_text = data.get('query')
     session_id = data.get('sessionId')
     conversation_id = data.get('conversationId')
+    id_m = data.get('id')
 
-    print(conversation_id + "   " + session_id)
 
     if not query_text:
         return jsonify({"error": "Query text is required"}), 400
@@ -67,19 +71,26 @@ def query():
     if not conversation_id:
         return jsonify({"error": "Conversation ID is required"}), 400
 
-    # Store user message in Redis
-    redis_client.rpush(f"session:{session_id}:conversation:{conversation_id}:messages", json.dumps({"role": "user", "content": query_text}))
+
+    # Store user message in Redis with a unique ID
+    redis_client.rpush(f"session:{session_id}:conversation:{conversation_id}:messages",
+                       json.dumps({"id": id_m, "role": "user", "content": query_text}))
 
     # Get the AI's response
     response_text = query_rag(query_text)
 
-    # Store AI message in Redis
-    redis_client.rpush(f"session:{session_id}:conversation:{conversation_id}:messages", json.dumps({"role": "ai", "content": response_text}))
+    # Generate a unique ID for the AI's response message
+    ai_message_id = str(uuid4())
 
+    # Store AI message in Redis with a unique ID
+    redis_client.rpush(f"session:{session_id}:conversation:{conversation_id}:messages",
+                       json.dumps({"id": ai_message_id, "role": "ai", "content": response_text}))
 
     return jsonify({
         "ai": response_text,
+        "messageId": ai_message_id  # Return the AI message ID for reference if needed
     })
+
 
 @app.route('/api/history/<string:session_id>/<string:conversation_id>', methods=['GET'])
 def get_history(session_id, conversation_id):
@@ -92,8 +103,6 @@ def get_history(session_id, conversation_id):
 
 @app.route('/api/conversations/<string:session_id>', methods=['POST'])
 def get_conversation_ids(session_id):
-
-
     # Retrieve all conversation IDs for the given session ID from Redis
     conversation_ids = redis_client.keys(f"session:{session_id}:conversation:*")
     print(conversation_ids)
@@ -105,6 +114,7 @@ def get_conversation_ids(session_id):
         "conversation_ids": conversation_ids
     })
 
+
 @app.route('/api/deleteConversation/<string:session_id>/<string:conversation_id>', methods=['DELETE'])
 def delete_conversation(session_id, conversation_id):
     # Delete all keys related to the conversation
@@ -112,6 +122,23 @@ def delete_conversation(session_id, conversation_id):
     if keys_to_delete:
         redis_client.delete(*keys_to_delete)
     return jsonify({"message": "Conversation deleted successfully"})
+
+
+@app.route('/api/createConversation', methods=['POST'])
+def create_conversation():
+    # Check if the conversation already exists
+    data = request.json
+    session_id = data.get('sessionId')
+    conversation_id = data.get('conversationId')
+
+    if redis_client.exists(f"session:{session_id}:conversation:{conversation_id}:messages"):
+        return jsonify({"error": "Conversation already exists"}), 400
+
+    # Initialize an empty list of messages for the new conversation
+    redis_client.rpush(f"session:{session_id}:conversation:{conversation_id}:messages",
+                       json.dumps({"role": "system", "content": "Conversation created"}))
+
+
 
 
 if __name__ == '__main__':
