@@ -44,18 +44,9 @@ const SideBar = () => {
     }
 
     const newConversation = () => {
-        const newConversation = uuidv4()
         //localStorage.setItem('conversationId', newConversation);
 
-        axios
-            .post(`/api/createConversation`, {
-                sessionId: sessionId,
-                conversationId: newConversation,
-            })
-            .then(() => {
-                router.push(`/conversation/${newConversation}`)
-                mutate(`/api/conversations/${sessionId}`)
-            })
+        router.push('/')
     }
 
     //console.log(conversations.conversation_ids.map((ids) => {console.log(ids)}));

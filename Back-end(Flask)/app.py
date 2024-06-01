@@ -124,22 +124,6 @@ def delete_conversation(session_id, conversation_id):
     return jsonify({"message": "Conversation deleted successfully"})
 
 
-@app.route('/api/createConversation', methods=['POST'])
-def create_conversation():
-    # Check if the conversation already exists
-    data = request.json
-    session_id = data.get('sessionId')
-    conversation_id = data.get('conversationId')
-
-    if redis_client.exists(f"session:{session_id}:conversation:{conversation_id}:messages"):
-        return jsonify({"error": "Conversation already exists"}), 400
-
-    # Initialize an empty list of messages for the new conversation
-    redis_client.rpush(f"session:{session_id}:conversation:{conversation_id}:messages",
-                       json.dumps({"role": "system", "content": "Conversation created"}))
-
-
-
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
