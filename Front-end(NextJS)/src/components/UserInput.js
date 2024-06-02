@@ -1,11 +1,7 @@
 const UserInput = ({ children }) => (
     <div className={'flex flex-row'}>
-        <div className="relative inline-flex p-1 items-center justify-center w-8 h-8 overflow-hidden bg-denim-100 rounded-full ring-2 ring-denim-600 dark:ring-gray-600 my-6 mr-3">
-            <span
-                className="font-lightpm run dev
-                text-white-600">
-                ME
-            </span>
+        <div className="relative inline-flex p-1 items-center justify-center w-8 h-8 overflow-hidden bg-denim-100 bg-transparent rounded-full ring-2 ring-denim-600 dark:ring-gray-600 dark:text-white my-6 mr-3">
+            <span className="text-white-600">ME</span>
         </div>
 
         <div

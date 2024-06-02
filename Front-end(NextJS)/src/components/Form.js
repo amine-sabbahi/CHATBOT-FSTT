@@ -90,6 +90,40 @@ const Form = () => {
         }
     }
 
+    useEffect(() => {
+        // Function to set the theme based on the value stored in localStorage
+        const setThemeOnLoad = () => {
+            const currentTheme = localStorage.getItem('theme')
+            if (currentTheme) {
+                document.documentElement.classList.add(currentTheme)
+            } else {
+                // If no theme is stored in localStorage, set default theme to 'light'
+                document.documentElement.classList.add('light')
+            }
+        }
+
+        // Call the function to set the theme when the component mounts
+        setThemeOnLoad()
+
+        // Clean up function to remove event listener when component unmounts
+        return () => {
+            // Remove the theme class to avoid duplication when the component remounts
+            document.documentElement.classList.remove('dark', 'light')
+        }
+    }, [])
+
+    const handleDarkLightMode = () => {
+        const currentTheme = localStorage.getItem('theme')
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark'
+        localStorage.setItem('theme', newTheme)
+
+        if (newTheme === 'dark') {
+            document.documentElement.classList.add('dark')
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
+    }
+
     const type = 'bubbles'
     const color = '#1a5fb4'
 
@@ -111,6 +145,51 @@ const Form = () => {
     return (
         <form onSubmit={handleSubmit} className={'w-full'}>
             <div className="flex flex-col p-4 rounded-xl shadow-xl h-full w-full shadow-denim-300 bg-white dark:bg-gray-700 dark:shadow-gray-700">
+                <div className="flex flex-col justify-center items-end ml-3">
+                    <input
+                        type="checkbox"
+                        name="light-switch"
+                        className="w-4 light-switch sr-only"
+                    />
+                    <label
+                        className="relative cursor-pointer p-2 transition ease-in-out delay-150"
+                        htmlFor="light-switch"
+                        onClick={() => handleDarkLightMode()}>
+                        <svg
+                            className="dark:hidden transition-opacity duration-500"
+                            viewBox={'0 0 25 25'}
+                            width="30"
+                            height="30"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                className="fill-slate-300"
+                                d="M7 0h2v2H7zM12.88 1.637l1.414 1.415-1.415 1.413-1.413-1.414zM14 7h2v2h-2zM12.95 14.433l-1.414-1.413 1.413-1.415 1.415 1.414zM7 14h2v2H7zM2.98 14.364l-1.413-1.415 1.414-1.414 1.414 1.415zM0 7h2v2H0zM3.05 1.706 4.463 3.12 3.05 4.535 1.636 3.12z"
+                            />
+                            <path
+                                className="fill-slate-400"
+                                d="M8 4C5.8 4 4 5.8 4 8s1.8 4 4 4 4-1.8 4-4-1.8-4-4-4Z"
+                            />
+                        </svg>
+                        <svg
+                            className="hidden dark:block"
+                            viewBox={'0 0 25 25'}
+                            width="30"
+                            height="30"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                className="fill-slate-400"
+                                d="M6.2 1C3.2 1.8 1 4.6 1 7.9 1 11.8 4.2 15 8.1 15c3.3 0 6-2.2 6.9-5.2C9.7 11.2 4.8 6.3 6.2 1Z"
+                            />
+                            <path
+                                className="fill-slate-500"
+                                d="M12.5 5a.625.625 0 0 1-.625-.625 1.252 1.252 0 0 0-1.25-1.25.625.625 0 1 1 0-1.25 1.252 1.252 0 0 0 1.25-1.25.625.625 0 1 1 1.25 0c.001.69.56 1.249 1.25 1.25a.625.625 0 1 1 0 1.25c-.69.001-1.249.56-1.25 1.25A.625.625 0 0 1 12.5 5Z"
+                            />
+                        </svg>
+                        <span className="sr-only">
+                            Switch to light / dark version
+                        </span>
+                    </label>
+                </div>
                 <div
                     className={
                         combinedMessages.length === 0
@@ -136,8 +215,11 @@ const Form = () => {
                                         }}
                                     />
                                 </div>
-                                <div className={'mt-2 text-2xl font-bold'}>
-                                    How can I help you today?
+                                <div
+                                    className={
+                                        'mt-2 text-2xl font-bold dark:text-white'
+                                    }>
+                                    How can I help you today ?
                                 </div>
                             </div>
                         </div>
@@ -213,7 +295,7 @@ const Form = () => {
                         name={'userInput'}
                         onKeyDown={handleKeyDown}
                         placeholder={'Write your Question'}
-                        className={`appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight outline-none resize-none overflow-auto bg-white dark:bg-gray-700`}
+                        className={`appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight outline-none resize-none overflow-auto bg-white dark:bg-gray-700 dark:text-white`}
                         required
                         disabled={loading}
                     />
