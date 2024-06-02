@@ -6,7 +6,7 @@ import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons'
 import axios from '@/lib/axios'
 import { mutate } from 'swr'
 import { useRouter } from 'next/router'
-
+import { Tooltip } from '@material-tailwind/react'
 const SideBar = () => {
     const [sessionId, setSessionId] = useState(null)
     const { conversations } = useConversations(sessionId)
@@ -58,14 +58,23 @@ const SideBar = () => {
                     FSTT - Chatbot
                 </h5>
                 <div className={'flex justify-between ml-auto'}>
-                    <button
-                        data-tooltip-target="tooltip-default"
-                        onClick={() => newConversation()}>
-                        <FontAwesomeIcon
-                            icon={faEdit}
-                            style={{ fontSize: '1.2rem', color: '#1a5fb4' }}
-                        />
-                    </button>
+                    <Tooltip
+                        content="New Chat"
+                        placement="right"
+                        animate={{
+                            mount: { scale: 1, x: 0 },
+                            unmount: { scale: 0, x: -25 },
+                        }}
+                        className={
+                            'text-white bg-black p-4 font-bold border border-gray-500 px-3 py-2'
+                        }>
+                        <button onClick={() => newConversation()}>
+                            <FontAwesomeIcon
+                                icon={faEdit}
+                                style={{ fontSize: '1.2rem', color: '#1a5fb4' }}
+                            />
+                        </button>
+                    </Tooltip>
                 </div>
             </div>
             <nav className="flex min-w-[240px] h-full overflow-x-auto flex-col gap-1 p-2 font-sans text-base font-normal text-blue-gray-700 dark:text-white">
@@ -90,13 +99,24 @@ const SideBar = () => {
                                     e.stopPropagation()
                                     handleDelete(convId)
                                 }}>
-                                <FontAwesomeIcon
-                                    icon={faTrash}
-                                    style={{
-                                        fontSize: '1.2rem',
-                                        color: '#1a5fb4',
+                                <Tooltip
+                                    content="Delete conversation"
+                                    className={
+                                        'p-2 font-bold border border-gray-500'
+                                    }
+                                    animate={{
+                                        mount: { scale: 1, y: 0 },
+                                        unmount: { scale: 0, y: 25 },
                                     }}
-                                />
+                                    placement={'top'}>
+                                    <FontAwesomeIcon
+                                        icon={faTrash}
+                                        style={{
+                                            fontSize: '1.2rem',
+                                            color: '#1a5fb4',
+                                        }}
+                                    />
+                                </Tooltip>
                             </button>
                         </div>
                     ))
