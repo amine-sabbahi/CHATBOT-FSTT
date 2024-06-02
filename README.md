@@ -1,4 +1,4 @@
-# ChatBot with Next.js, Ollama, Flask, and Docker
+# ChatBot with RAG and Fine-Tuning
 
 This repository contains a chatbot application with two model options: Retrieval-Augmented Generation (RAG) and a fine-tuned model. The application is built using Next.js, Ollama, Flask, and Docker.
 
