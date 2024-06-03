@@ -6,7 +6,14 @@ import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons'
 import axios from '@/lib/axios'
 import { mutate } from 'swr'
 import { useRouter } from 'next/router'
-import { Tooltip } from '@material-tailwind/react'
+import {
+    Menu,
+    MenuHandler,
+    MenuItem,
+    MenuList,
+    Tooltip,
+    Button,
+} from '@material-tailwind/react'
 const SideBar = () => {
     const [sessionId, setSessionId] = useState(null)
     const { conversations } = useConversations(sessionId)
@@ -126,6 +133,23 @@ const SideBar = () => {
                     </div>
                 )}
             </nav>
+            <Menu>
+                <MenuHandler>
+                    <Button
+                        className={
+                            'ont-bold py-2 px-4 rounded-full text-denim-50 bg-denim-500 hover:bg-denim-600 active:bg-denim-700'
+                        }>
+                        Choose a Model
+                    </Button>
+                </MenuHandler>
+                <MenuList
+                    className={
+                        'dark:text-white dark:bg-gray-700 dark:border-gray-900'
+                    }>
+                    <MenuItem>gemma (RAG)</MenuItem>
+                    <MenuItem>gemma (Fine-tuned)</MenuItem>
+                </MenuList>
+            </Menu>
         </div>
     )
 }

@@ -193,8 +193,8 @@ const Form = () => {
                 <div
                     className={
                         combinedMessages.length === 0
-                            ? 'p-4 overflow-x-auto h-full flex items-center justify-center'
-                            : 'p-4 overflow-x-auto'
+                            ? 'p-4 overflow-x-auto h-full flex items-center justify-center pt-0'
+                            : 'p-4 overflow-x-auto pt-0'
                     }>
                     {combinedMessages.length === 0 && (
                         <div
