@@ -1,5 +1,6 @@
 from uuid import uuid4
-
+from transformers import AutoModelForCausalLM, AutoTokenizer
+import torch
 import redis
 import json
 from flask import Flask, request, jsonify
@@ -54,6 +55,26 @@ def query_rag(query_text: str):
 
     return response_text
 
+# Importing the fine tuned model
+# Load the model and tokenizer
+model_path = "./FSTT Fine Tuned Model/B11-Confusion-V1"
+model2 = AutoModelForCausalLM.from_pretrained(model_path, local_files_only=True, torch_type=torch.float16, low_cpu_mem_usage=True)
+tokenizer2 = AutoTokenizer.from_pretrained(model_path, local_files_only=True)
+
+def query_fine_tuned_model(question, model, tokenizer, max_length=200):
+    prompt_template = f"""
+    You are an expert AI assistant. Please answer the following question directly and concisely in french language, providing only the most relevant information, ans If it's about names give only the name directly.
+    Question: {question}
+    Answer: """
+    
+    inputs = tokenizer.encode(prompt_template, return_tensors="pt")
+    outputs = model.generate(inputs, max_length=max_length, num_return_sequences=1, eos_token_id=tokenizer.eos_token_id)
+    response = tokenizer.decode(outputs[0], skip_special_tokens=True)
+    
+    # Extract the answer part from the template
+    answer_start = response.find("Answer:") + len("Answer: ")
+    answer = response[answer_start:].strip()
+    return answer
 
 @app.route('/query', methods=['POST'])
 def query():
@@ -77,7 +98,8 @@ def query():
                        json.dumps({"id": id_m, "role": "user", "content": query_text}))
 
     # Get the AI's response
-    response_text = query_rag(query_text)
+    #response_text = query_rag(query_text)
+    response_text = query_fine_tuned_model(query_text, model2, tokenizer2)
 
     # Generate a unique ID for the AI's response message
     ai_message_id = str(uuid4())
