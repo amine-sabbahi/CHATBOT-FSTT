@@ -66,6 +66,7 @@ const Form = () => {
                 sessionId: sessionId,
                 conversationId: conversationId,
                 id: id,
+                model_name: localStorage.getItem('model_name'),
             })
 
             setChatHistory(prevChatHistory => [
@@ -74,7 +75,6 @@ const Form = () => {
                     type: 'ai',
                     text: res.data.ai,
                     id: res.data.messageId,
-                    model_name: localStorage.getItem('model_name'),
                 },
             ])
             setUserInput('')
