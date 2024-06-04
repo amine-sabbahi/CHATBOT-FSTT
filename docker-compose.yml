@@ -13,6 +13,16 @@ services:
       - pull_model
       - ollama
 
+  front_end:
+    build:
+      context: .
+      dockerfile: Front-end(NextJS)/Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - back-end
+    networks:
+      - chromadb_network
 
   ollama:
     image: ollama/ollama:latest
