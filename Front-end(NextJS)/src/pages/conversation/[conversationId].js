@@ -296,7 +296,7 @@ export default function ConversationPage() {
                             name={'userInput'}
                             onKeyDown={handleKeyDown1}
                             placeholder={'Write your Question'}
-                            className={`appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight outline-none resize-none overflow-auto bg-white dark:bg-gray-700`}
+                            className={`appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight outline-none resize-none overflow-auto bg-white dark:bg-gray-700 dark:text-white`}
                             required
                             disabled={loading1}
                         />

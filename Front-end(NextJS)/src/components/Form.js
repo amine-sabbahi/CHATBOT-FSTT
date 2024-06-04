@@ -24,6 +24,7 @@ const Form = () => {
     const [conversationId, setConversationId] = useState(null)
     const chatEndRef = useRef(null)
 
+
     // Fetch History data
     const { messages, isLoading } = useMessages(sessionId, conversationId)
     const router = useRouter()
@@ -65,11 +66,16 @@ const Form = () => {
                 sessionId: sessionId,
                 conversationId: conversationId,
                 id: id,
+                model_name: localStorage.getItem('model_name'),
             })
 
             setChatHistory(prevChatHistory => [
                 ...prevChatHistory,
-                { type: 'ai', text: res.data.ai, id: res.data.messageId },
+                {
+                    type: 'ai',
+                    text: res.data.ai,
+                    id: res.data.messageId,
+                },
             ])
             setUserInput('')
             setLoading(false)

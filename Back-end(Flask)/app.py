@@ -84,7 +84,7 @@ def query():
     conversation_id = data.get('conversationId')
     id_m = data.get('id')
     model_name = data.get('model_name')  # Read the model name from the request data
-
+    print(model_name)
     if not query_text:
         return jsonify({"error": "Query text is required"}), 400
     if not session_id:
