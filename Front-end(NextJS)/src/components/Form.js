@@ -24,7 +24,6 @@ const Form = () => {
     const [conversationId, setConversationId] = useState(null)
     const chatEndRef = useRef(null)
 
-
     // Fetch History data
     const { messages, isLoading } = useMessages(sessionId, conversationId)
     const router = useRouter()
