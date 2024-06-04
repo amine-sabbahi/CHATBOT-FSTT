@@ -58,7 +58,7 @@ def query_rag(query_text: str):
 # Importing the fine tuned model
 # Load the model and tokenizer
 model_path = "./FSTT Fine Tuned Model/B11-Confusion-V1"
-model2 = AutoModelForCausalLM.from_pretrained(model_path, local_files_only=True, torch_type=torch.float16, low_cpu_mem_usage=True)
+model2 = AutoModelForCausalLM.from_pretrained(model_path, local_files_only=True)
 tokenizer2 = AutoTokenizer.from_pretrained(model_path, local_files_only=True)
 
 def query_fine_tuned_model(question, model, tokenizer, max_length=200):
@@ -83,7 +83,7 @@ def query():
     session_id = data.get('sessionId')
     conversation_id = data.get('conversationId')
     id_m = data.get('id')
-
+    model_name = data.get('model_name')  # Read the model name from the request data
 
     if not query_text:
         return jsonify({"error": "Query text is required"}), 400
@@ -92,14 +92,15 @@ def query():
     if not conversation_id:
         return jsonify({"error": "Conversation ID is required"}), 400
 
-
     # Store user message in Redis with a unique ID
     redis_client.rpush(f"session:{session_id}:conversation:{conversation_id}:messages",
                        json.dumps({"id": id_m, "role": "user", "content": query_text}))
 
-    # Get the AI's response
-    #response_text = query_rag(query_text)
-    response_text = query_fine_tuned_model(query_text, model2, tokenizer2)
+    # Get the AI's response based on the selected model
+    if model_name == 'gemma (RAG)':
+        response_text = query_rag(query_text)
+    else:  # Default to fine-tuned model
+        response_text = query_fine_tuned_model(query_text, model2, tokenizer2)
 
     # Generate a unique ID for the AI's response message
     ai_message_id = str(uuid4())

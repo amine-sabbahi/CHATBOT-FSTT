@@ -21,6 +21,8 @@ RUN pip install pypdf langchain chromadb pytest unstructured  langchain-communit
 RUN pip install sentence-transformers
 RUN pip install flask flask_cors
 RUN pip install redis
+RUN pip install transformers
+RUN pip install accelerate
 
 # Copy the current directory contents into the container at /app
 COPY ./Back-end(Flask) /app
