@@ -19,7 +19,8 @@ This repository contains a chatbot application with two model options: Retrieval
 ## Introduction
 
 This project demonstrates the implementation of a chatbot with two model options: Retrieval-Augmented Generation (RAG) and a fine-tuned model. The frontend is developed with Next.js, and the backend services are handled using Flask. Docker is used to containerize the application for easy deployment and scalability.
-
+### Demanded architecture
+![demanded_arch](src/demanded_arch.png)
 ## Technologies Used
 
 - **Next.js**: A React framework for building server-side rendered and statically generated web applications.
