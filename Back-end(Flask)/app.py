@@ -62,15 +62,17 @@ model2 = AutoModelForCausalLM.from_pretrained(model_path, local_files_only=True)
 tokenizer2 = AutoTokenizer.from_pretrained(model_path, local_files_only=True)
 
 def query_fine_tuned_model(question, model, tokenizer, max_length=200):
-    prompt_template = f"""
-    You are an expert AI assistant. Please answer the following question directly and concisely in french language, providing only the most relevant information, ans If it's about names give only the name directly. Dont provide any links
-    Question: {question}
-    Answer: """
-    
+    prompt_template = f""" Please answer  the following question directly and concisely, providing only the most 
+    relevant information.Answer in french language. 
+        Question: {question}
+        Answer: 
+    """
+
     inputs = tokenizer.encode(prompt_template, return_tensors="pt")
     outputs = model.generate(inputs, max_length=max_length, num_return_sequences=1, eos_token_id=tokenizer.eos_token_id)
     response = tokenizer.decode(outputs[0], skip_special_tokens=True)
-    
+
+    print(response)
     # Extract the answer part from the template
     answer_start = response.find("Answer:") + len("Answer: ")
     answer = response[answer_start:].strip()
@@ -99,7 +101,7 @@ def query():
     # Get the AI's response based on the selected model
     if model_name == 'gemma (RAG)':
         response_text = query_rag(query_text)
-    else:  # Default to fine-tuned model
+    elif model_name == 'gemma (Fine Tuned)':  # Default to fine-tuned model
         response_text = query_fine_tuned_model(query_text, model2, tokenizer2)
 
     # Generate a unique ID for the AI's response message

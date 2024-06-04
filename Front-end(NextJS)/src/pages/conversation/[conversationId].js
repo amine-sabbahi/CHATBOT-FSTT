@@ -62,13 +62,13 @@ export default function ConversationPage() {
         ])
 
         setLoading1(true) // Set loading state to true
-
         await axios
             .post('/query', {
                 query: userInput1,
                 sessionId: sessionId,
                 conversationId: conv_router,
                 id: id1,
+                model_name: localStorage.getItem('model_name'),
             })
             .then(res => {
                 setChatHistory1(prevChatHistory1 => [

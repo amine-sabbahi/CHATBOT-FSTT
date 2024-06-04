@@ -34,6 +34,7 @@ const SideBar = () => {
                 setSessionId(newSessionId)
             }
         }
+        localStorage.setItem('model_name', 'gemma (Fine Tuned)')
     }, [])
 
     const handleDelete = conversationId => {
