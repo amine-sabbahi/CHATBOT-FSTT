@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react'
-import { v4 as uuidv4 } from 'uuid'
-import useConversations from '@/hooks/conversations'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons'
-import axios from '@/lib/axios'
-import { mutate } from 'swr'
-import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import useConversations from '@/hooks/conversations';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
+import axios from '@/lib/axios';
+import { mutate } from 'swr';
+import { useRouter } from 'next/router';
 import {
     Menu,
     MenuHandler,
@@ -13,50 +13,53 @@ import {
     MenuList,
     Tooltip,
     Button,
-} from '@material-tailwind/react'
+} from '@material-tailwind/react';
+
 const SideBar = () => {
-    const [sessionId, setSessionId] = useState(null)
-    const { conversations } = useConversations(sessionId)
-    const router = useRouter()
+    const [sessionId, setSessionId] = useState(null);
+    const [selectedModel, setSelectedModel] = useState('gemma (Fine Tuned)');
+    const { conversations } = useConversations(sessionId);
+    const router = useRouter();
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
             // Check if window is defined
             // SessionId
-            const savedSessionId = localStorage.getItem('sessionId')
+            const savedSessionId = localStorage.getItem('sessionId');
             if (savedSessionId) {
-                setSessionId(savedSessionId)
+                setSessionId(savedSessionId);
             } else {
-                const newSessionId = uuidv4()
-                localStorage.setItem('sessionId', newSessionId)
-                setSessionId(newSessionId)
+                const newSessionId = uuidv4();
+                localStorage.setItem('sessionId', newSessionId);
+                setSessionId(newSessionId);
             }
         }
-    }, [])
+    }, []);
 
     const handleDelete = conversationId => {
         axios
             .delete(`/api/deleteConversation/${sessionId}/${conversationId}`)
             .then(() => {
-                mutate(`/api/conversations/${sessionId}`)
-                mutate(`/api/history/${sessionId}/${conversationId}`)
+                mutate(`/api/conversations/${sessionId}`);
+                mutate(`/api/history/${sessionId}/${conversationId}`);
 
                 if (router.asPath === `/conversation/${conversationId}`) {
-                    router.push('/')
+                    router.push('/');
                 }
             })
             .catch(error => {
-                throw error
-            })
-    }
+                throw error;
+            });
+    };
 
     const newConversation = () => {
         //localStorage.setItem('conversationId', newConversation);
+        router.push('/');
+    };
 
-        router.push('/')
-    }
-
-    //console.log(conversations.conversation_ids.map((ids) => {console.log(ids)}));
+    const handleModelChange = (model) => {
+        setSelectedModel(model);
+    };
 
     return (
         <div className="relative flex mr-5 w-full max-w-[20rem] flex-col rounded-xl bg-white dark:bg-gray-700 bg-clip-border p-4 text-gray-700 shadow-xl shadow-denim-300 dark:shadow-gray-700">
@@ -103,8 +106,8 @@ const SideBar = () => {
                             <button
                                 className="ml-4 relative"
                                 onClick={e => {
-                                    e.stopPropagation()
-                                    handleDelete(convId)
+                                    e.stopPropagation();
+                                    handleDelete(convId);
                                 }}>
                                 <Tooltip
                                     content="Delete conversation"
@@ -139,19 +142,19 @@ const SideBar = () => {
                         className={
                             'ont-bold py-2 px-4 rounded-full text-denim-50 bg-denim-500 hover:bg-denim-600 active:bg-denim-700'
                         }>
-                        Choose a Model
+                        {selectedModel}
                     </Button>
                 </MenuHandler>
                 <MenuList
                     className={
                         'dark:text-white dark:bg-gray-700 dark:border-gray-900'
                     }>
-                    <MenuItem>gemma (RAG)</MenuItem>
-                    <MenuItem>gemma (Fine-tuned)</MenuItem>
+                    <MenuItem onClick={() => handleModelChange('gemma (RAG)')}>gemma (RAG)</MenuItem>
+                    <MenuItem onClick={() => handleModelChange('gemma (Fine Tuned)')}>gemma (Fine Tuned)</MenuItem>
                 </MenuList>
             </Menu>
         </div>
-    )
-}
+    );
+};
 
-export default SideBar
+export default SideBar;
