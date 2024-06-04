@@ -23,6 +23,7 @@ const Form = () => {
     const [sessionId, setSessionId] = useState(null)
     const [conversationId, setConversationId] = useState(null)
     const chatEndRef = useRef(null)
+    const [model_name, setModelName] = localStorage.getItem('model_name')
 
     // Fetch History data
     const { messages, isLoading } = useMessages(sessionId, conversationId)
@@ -69,7 +70,12 @@ const Form = () => {
 
             setChatHistory(prevChatHistory => [
                 ...prevChatHistory,
-                { type: 'ai', text: res.data.ai, id: res.data.messageId },
+                {
+                    type: 'ai',
+                    text: res.data.ai,
+                    id: res.data.messageId,
+                    model_name: localStorage.getItem('model_name'),
+                },
             ])
             setUserInput('')
             setLoading(false)
