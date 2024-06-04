@@ -58,12 +58,12 @@ def query_rag(query_text: str):
 # Importing the fine tuned model
 # Load the model and tokenizer
 model_path = "./FSTT Fine Tuned Model/B11-Confusion-V1"
-model2 = AutoModelForCausalLM.from_pretrained(model_path, local_files_only=True, torch_type=torch.float16, low_cpu_mem_usage=True)
+model2 = AutoModelForCausalLM.from_pretrained(model_path, local_files_only=True)
 tokenizer2 = AutoTokenizer.from_pretrained(model_path, local_files_only=True)
 
 def query_fine_tuned_model(question, model, tokenizer, max_length=200):
     prompt_template = f"""
-    You are an expert AI assistant. Please answer the following question directly and concisely in french language, providing only the most relevant information, ans If it's about names give only the name directly.
+    You are an expert AI assistant. Please answer the following question directly and concisely in french language, providing only the most relevant information, ans If it's about names give only the name directly. Dont provide any links
     Question: {question}
     Answer: """
     
