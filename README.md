@@ -7,6 +7,9 @@ This repository contains a chatbot application with two model options: Retrieval
 - [Introduction](#introduction)
 - [Technologies Used](#technologies-used)
 - [Architecture](#architecture)
+  - [System Components Overview](#System-Components-Overview)
+- [Methodology](#Methodology)
+  - [Data Collection](#Data-Collection)
   - [RAG (Retrieval-Augmented Generation)](#rag-retrieval-augmented-generation)
   - [Fine-Tuned Model](#fine-tuned-model)
   - [Front-End](#front-end)
@@ -31,6 +34,23 @@ This project demonstrates the implementation of a chatbot with two model options
 - **CHromaDB** : A vector database for context retreving.
 
 ## Architecture
+The architecture implemented of our chatbot is composed of various components:
+![rag_arch](src\arch_implemented.jpg)
+
+### System Components Overview
+
+| **Component**        | **Technology**                                | **Function**                                                                                          |
+|----------------------|-----------------------------------------------|-------------------------------------------------------------------------------------------------------|
+| **Front-End**        | Next.js                                       | Provides the user interface for the application. Receives user requests and communicates with the back-end to fetch data. |
+| **Back-End**         | Flask, ChromaDB, Gemma-2b-it (Fine Tuned)     | Handles the business logic, processes data, and interacts with the database. Serves data to the front-end.                  |
+| **Ollama**           | Ollama, Gemma 2b-instruct                     | Provides specific instruction-based processing or functionalities, possibly related to AI or machine learning tasks.         |
+| **Redis**            | Redis                                         | Used for caching and fast data retrieval to support the back-end operations.                                                  |
+| **Persistent Volumes** | Docker Volumes                               | Store data for Ollama and Redis that remains even if the containers are restarted.                                             |
+| **Docker Network**   | Docker Network                                | Allows all components to communicate with each other within the containerized environment.                                    |
+## Methodology
+### Data Collection
+We started by scraping relevant data from the FSTT website using Beautiful Soup. The data included detailed information on courses, faculty clubs, and general institutional details. The scraped data was stored in ChromaDB, a vector database for efficient embedding-based similarity searches.
+
 
 ### RAG (Retrieval-Augmented Generation)
 
