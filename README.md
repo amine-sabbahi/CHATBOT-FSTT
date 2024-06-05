@@ -98,7 +98,7 @@ Developed using Next.js for a smooth and responsive user experience. Users can i
 ![app_interface](src/app_interface.jpg)
 
 #### Conversation Interface in dark mode
-![app_interface](src/app_dar_interface.png)
+![app_interface](src/app_dark_interface.png)
 
 #### Conversation using the Fine Tuned model
 ![app_interface](src/app_image1.png)
