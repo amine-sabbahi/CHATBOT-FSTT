@@ -35,7 +35,7 @@ This project demonstrates the implementation of a chatbot with two model options
 
 ## Architecture
 The architecture implemented of our chatbot is composed of various components:
-![rag_arch](src\arch_implemented.jpg)
+![implemented_arch](src/arch_implemented.jpg)
 
 ### System Components Overview
 
