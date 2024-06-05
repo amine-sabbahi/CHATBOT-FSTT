@@ -139,6 +139,9 @@ To install and run the chatbot locally, follow these steps:
 
 3. Access the application at http://localhost:3000.
 
+## Usage
+Users can interact with the chatbot through the front-end interface. Choose between the fine-tuned model and the RAG model for generating responses. Manage conversations by listing, deleting, or initiating new interactions.
+
 ## Contributeurs
 
    - [BAKKALI AYOUB](https://github.com/BAKKALIAYOUB).
