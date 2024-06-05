@@ -1,4 +1,4 @@
-# ChatBot with RAG and Fine-Tuning
+# FSTT ChatBot with RAG and Fine-Tuning
 
 This repository contains a chatbot application with two model options: Retrieval-Augmented Generation (RAG) and a fine-tuned model. The application is built using Next.js, Ollama, Flask, and Docker.
 
@@ -9,11 +9,12 @@ This repository contains a chatbot application with two model options: Retrieval
 - [Architecture](#architecture)
   - [RAG (Retrieval-Augmented Generation)](#rag-retrieval-augmented-generation)
   - [Fine-Tuned Model](#fine-tuned-model)
-- [Setup and Installation](#setup-and-installation)
-  - [Prerequisites](#prerequisites)
-  - [Installation Steps](#installation-steps)
+  - [Front-End](#front-end)
+- [Comparative Summary](#Comparative-Summary)
+- [Conclusion](#Conclusion)
+- [Installation](#installation)
 - [Usage](#usage)
-- [Contributing](#contributing)
+- [Contributeurs](#Contributeurs)
 - [License](#license)
 
 ## Introduction
@@ -48,6 +49,12 @@ Retrieval-Augmented Generation (RAG) is a hybrid model architecture that combine
 4. **Response Generation**: The generator module (Ollama) processes the information and generates a response based on the retrieved documents.
 5. **Response Delivery**: The generated response is sent back to the user.
 
+The RAG technique combines retrieval mechanisms with generative models to improve response accuracy. The key components include:
+- **Flask Web Application**: Manages HTTP requests and responses.
+- **Chroma**: Stores and retrieves embeddings for similarity searches.
+- **LLM**: Uses Gemma 2B-instruct to generate responses based on retrieved context.
+- **Prompt Template**: Ensures consistent and relevant responses.
+
 ### Fine-Tuned Model
 
 The fine-tuned model approach involves taking a pre-trained language model and further training it on a specific dataset to adapt it to the chatbot's domain. This customization allows the model to understand and respond to queries more accurately within the specific context.
@@ -58,3 +65,71 @@ The fine-tuned model approach involves taking a pre-trained language model and f
 1. **Pre-trained Model**: Start with a pre-trained language model such as gemma.
 2. **Fine-Tuning**: Train the model further on a dataset specific to the chatbot's use case, enabling it to learn domain-specific language and responses.
 
+#### The fine-tuning process involved:
+- **Dataset**: Domain-specific data related to FSTT.
+- **Model Configuration**: Utilized google/gemma-2b-it with 4-bit quantization and LoRA for efficient training.
+- **Training Process**: Optimized with parameters like batch size, learning rate, and number of epochs.
+- **Model Saving**: The fine-tuned model was integrated with the front-end for real-time interaction.
+
+### Front-End
+Developed using Next.js for a smooth and responsive user experience. Users can interact with the chatbot and choose between the fine-tuned model (Gemma 2B-it) and the RAG model (Gemma 2B-instruct). Users can manage their conversations by listing, deleting, and initiating new ones.
+
+#### Conversation Interface
+![app_interface](src/app_interface.jpg)
+
+#### Conversation Interface in dark mode
+![app_interface](src/app_dar_interface.png)
+
+#### Conversation using the Fine Tuned model
+![app_interface](src/app_image1.png)
+
+#### Conversation using RAG
+![app_interface](src/app_image2.png)
+
+## Comparative Summary
+| Aspect | RAG | Fine-Tuning |
+|--------|-----|-------------|
+| Concept | Combines retrieval-based and generation-based models. | Adapts a pretrained model to a specific task or dataset. |
+| Workflow | Utilizes a retriever to fetch relevant passages and a generator to produce responses. | Involves pretraining on a large dataset, then fine-tuning on a smaller, task-specific dataset. |
+| Advantages | Enhanced contextual understanding, better handling of complex queries. | Task-specific optimization, faster deployment. |
+| Challenges | Computational complexity, integration of retriever and generator. | Data availability, risk of overfitting. |
+| Flexibility | More flexible in handling complex queries and leveraging external knowledge sources. | Task-specific, less flexible compared to RAG. |
+| Resource Requirements | Requires embedding models, vector databases, LLMs. | Fine-tuning can be resource-intensive. |
+| Response Quality | Limited by the quality and relevance of retrieved documents. | Generally provides high-quality, contextually relevant responses. |
+| Performance | Performs well with contextual understanding and knowledge incorporation. | Excels when the task is well-defined with abundant labeled data. |
+| Deployment | Easy infrastructure for retrieval and generation processes. | Challenging due to substantial model size. |
+
+## Conclusion
+The chatbot for FSTT integrates advanced technologies to provide a dynamic and contextually rich interaction experience. By combining fine-tuning techniques with RAG, the chatbot ensures accurate and relevant responses. The use of Docker for containerization enhances scalability and efficiency, while technologies like Flask, Next.js, and Redis contribute to seamless communication and enhanced user experience.
+
+## Installation
+To install and run the chatbot locally, follow these steps:
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/BAKKALIAYOUB/CHATBOT-RAG.git
+   cd CHATBOT-RAG
+
+2. Build the Docker containers:
+   ```bash
+   docker-compose up --build
+
+3. Access the application at http://localhost:3000.
+
+## Contributeurs
+
+   - [BAKKALI AYOUB](https://github.com/BAKKALIAYOUB).
+
+   - [NIDAR SALMA](https://github.com/salma31nidar).
+
+   - [SABBAHI MOHAMED AMINE](https://github.com/amine-sabbahi).
+
+   - [MAHRI AYMANE](https://github.com/AymaneM21).
+
+---
+
+**Abdelmalek Essaadi University** Faculty of Sciences and Techniques
+   - Department : Computer Engineering
+   - Master : AI & DS
+   - Module : Natural language Processing (NLP)
+   - Framed by : Pr. Lotfi ELAACHAK
