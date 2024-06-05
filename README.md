@@ -106,6 +106,9 @@ Developed using Next.js for a smooth and responsive user experience. Users can i
 #### Conversation using RAG
 ![app_interface](src/app_image2.png)
 
+#### Conversation in formated formate
+![app_interface](src/table_response.png)
+
 ## Comparative Summary
 | Aspect | RAG | Fine-Tuning |
 |--------|-----|-------------|
