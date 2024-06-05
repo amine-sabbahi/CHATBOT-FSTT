@@ -35,6 +35,8 @@ This project demonstrates the implementation of a chatbot with two model options
 
 Retrieval-Augmented Generation (RAG) is a hybrid model architecture that combines the strengths of retrieval-based and generative models. It retrieves relevant documents or passages from a knowledge base and then generates a response based on the retrieved information. This approach enhances the chatbot's ability to provide accurate and contextually relevant answers.
 
+#### RAG Architecture
+![rag_arch](src/rag_arch.png)
 1. **Retrieval Module**: This module searches a knowledge base to find the most relevant documents or passages related to the user's query. In our implementation, we use **ChromaDB** for efficient retrieval and management of large text datasets.
 2. **Generator Module**: After retrieving the relevant information, the generator module, powered by **Ollama**, uses it to produce a coherent and contextually appropriate response.
 
@@ -49,6 +51,9 @@ Retrieval-Augmented Generation (RAG) is a hybrid model architecture that combine
 ### Fine-Tuned Model
 
 The fine-tuned model approach involves taking a pre-trained language model and further training it on a specific dataset to adapt it to the chatbot's domain. This customization allows the model to understand and respond to queries more accurately within the specific context.
+
+#### Fine-Tuned Model Architecture
+![FTM_arch](src/fine_tuning_arch.png)
 
 1. **Pre-trained Model**: Start with a pre-trained language model such as gemma.
 2. **Fine-Tuning**: Train the model further on a dataset specific to the chatbot's use case, enabling it to learn domain-specific language and responses.
