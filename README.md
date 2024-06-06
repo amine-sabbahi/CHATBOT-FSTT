@@ -130,7 +130,7 @@ To install and run the chatbot locally, follow these steps:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/BAKKALIAYOUB/CHATBOT-FSTT.git
+   git clone https://github.com/amine-sabbahi/CHATBOT-FSTT.git
    cd CHATBOT-FSTT
 
 2. Build the Docker containers:
